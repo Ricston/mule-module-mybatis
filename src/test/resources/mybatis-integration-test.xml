@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+	xmlns:test="http://www.mulesoft.org/schema/mule/test" 
+	xmlns:mybatis="http://www.mulesoft.org/schema/mule/mybatis" 
+	xmlns:springjdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
+http://www.mulesoft.org/schema/mule/mybatis http://www.mulesoft.org/schema/mule/mybatis/current/mule-mybatis.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd ">
+
+	<mybatis:config name="mybatis" configFile="mybatis-config.xml"/>
+	
+	<spring:beans>
+		<spring:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<spring:property name="driverClassName" value="org.h2.Driver" /> 
+			<spring:property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
+			<spring:property name="username" value="root" />
+			<spring:property name="password" value="" />
+		</spring:bean>
+		
+		<springjdbc:initialize-database data-source="dataSource" enabled="true" ignore-failures="DROPS" >
+			<springjdbc:script location="classpath:db-schema.ddl" />
+		</springjdbc:initialize-database>
+	</spring:beans>
+
+	<flow name="testInsert">
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
+	</flow>
+	
+	<flow name="testSelect">
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="selectPerson" />
+	</flow>
+	
+	<flow name="testTransactionSuccess">
+		<mybatis:begin-transaction />
+		
+		<set-variable variableName="person" value="#[payload]" />
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
+		
+		<foreach collection="#[flowVars.person.addresses]">
+			<expression-component>
+				payload.personId = flowVars.person.id;
+			</expression-component>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" />
+		</foreach>
+		
+		<mybatis:commit-transaction />
+	</flow>
+	
+	<flow name="testTransactionSuccessWithExceptionStrategy">
+		<mybatis:begin-transaction />
+		
+		<set-variable variableName="person" value="#[payload]" />
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
+		
+		<foreach collection="#[flowVars.person.addresses]">
+			<expression-component>
+				payload.personId = flowVars.person.id;
+			</expression-component>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" />
+		</foreach>
+		
+		<test:component throwException="true"/>
+		
+		<catch-exception-strategy>
+			<mybatis:commit-transaction />
+		</catch-exception-strategy>
+	</flow>
+	
+	<flow name="testTransactionRollback">
+		<mybatis:begin-transaction />
+		
+		<set-variable variableName="person" value="#[payload]" />
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
+		
+		<foreach collection="#[flowVars.person.addresses]">
+			<expression-component>
+				payload.personId = flowVars.person.id;
+			</expression-component>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" />
+		</foreach>
+		
+		<mybatis:rollback-transaction />
+	</flow>
+	
+	<flow name="testTransactionRollbackWithExceptionStrategy">
+		<mybatis:begin-transaction />
+		
+		<set-variable variableName="person" value="#[payload]" />
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
+		
+		<foreach collection="#[flowVars.person.addresses]">
+			<expression-component>
+				payload.personId = flowVars.person.id;
+			</expression-component>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" />
+		</foreach>
+		
+		<test:component throwException="true"/>
+	
+		<rollback-exception-strategy>
+			<mybatis:rollback-transaction />
+		</rollback-exception-strategy>
+	</flow>
+
+</mule>

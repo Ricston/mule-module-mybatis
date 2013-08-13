@@ -1,0 +1,45 @@
+<!-- BEGIN_INCLUDE(mybatis:execute) -->
+    <mybatis:execute mapper="Person" method="selectPerson"/>
+<!-- END_INCLUDE(mybatis:execute) -->
+
+<!-- BEGIN_INCLUDE(mybatis:select-one) -->
+    <mybatis:select-one statement="org.mybastis.sql.PersonMapper.selectOne"/>
+<!-- END_INCLUDE(mybatis:select-one) -->
+
+<!-- BEGIN_INCLUDE(mybatis:select-list) -->
+    <mybatis:select-list statement="org.mybastis.sql.PersonMapper.selectList"/>
+<!-- END_INCLUDE(mybatis:select-list) -->
+
+<!-- BEGIN_INCLUDE(mybatis:select-map) -->
+    <mybatis:select-map statement="org.mybastis.sql.PersonMapper.selectMap" mapKey="id"/>
+<!-- END_INCLUDE(mybatis:select-map) -->
+
+<!-- BEGIN_INCLUDE(mybatis:update) -->
+    <mybatis:update statement="org.mybastis.sql.PersonMapper.update"/>
+<!-- END_INCLUDE(mybatis:update) -->
+
+<!-- BEGIN_INCLUDE(mybatis:insert) -->
+    <mybatis:insert statement="org.mybastis.sql.PersonMapper.selectOne"/>
+<!-- END_INCLUDE(mybatis:insert) -->
+
+<!-- BEGIN_INCLUDE(mybatis:delete) -->
+    <mybatis:delete statement="org.mybastis.sql.PersonMapper.selectOne"/>
+<!-- END_INCLUDE(mybatis:delete) -->
+
+<!-- BEGIN_INCLUDE(mybatis:begin-transaction) -->
+    <mybatis:begin-transaction />
+<!-- END_INCLUDE(mybatis:begin-transaction) -->
+
+<!-- BEGIN_INCLUDE(mybatis:commit-transaction) -->
+    <mybatis:commit-transaction />
+<!-- END_INCLUDE(mybatis:commit-transaction) -->
+
+<!-- BEGIN_INCLUDE(mybatis:rollback-transaction) -->
+    <mybatis:rollback-transaction />
+<!-- END_INCLUDE(mybatis:rollback-transaction) -->
+
+
+
+
+
+

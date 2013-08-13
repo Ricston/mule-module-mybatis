@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:vm="http://www.mulesoft.org/schema/mule/vm"
+	xmlns:test="http://www.mulesoft.org/schema/mule/test" 
+	xmlns:mybatis="http://www.mulesoft.org/schema/mule/mybatis" 
+	xmlns:springjdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
+http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
+http://www.mulesoft.org/schema/mule/mybatis http://www.mulesoft.org/schema/mule/mybatis/current/mule-mybatis.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd ">
+
+	<mybatis:config name="mybatis" sqlSessionFactory-ref="sqlSessionFactory" />
+	
+	<spring:beans>
+		<spring:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<spring:property name="driverClassName" value="org.h2.Driver" /> 
+			<spring:property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
+			<spring:property name="username" value="root" />
+			<spring:property name="password" value="" />
+		</spring:bean>
+		
+		<springjdbc:initialize-database data-source="dataSource" enabled="true" ignore-failures="DROPS" >
+			<springjdbc:script location="classpath:db-schema.ddl" />
+		</springjdbc:initialize-database>
+		
+		<spring:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<spring:property name="dataSource" ref="dataSource" />
+			<spring:property name="configLocation" value="classpath:mybatis-config.xml" />
+		</spring:bean>
+	</spring:beans>
+
+	<flow name="testInsert">
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
+	</flow>
+	
+	<flow name="testSelect">
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="selectPerson" />
+	</flow>
+	
+</mule>

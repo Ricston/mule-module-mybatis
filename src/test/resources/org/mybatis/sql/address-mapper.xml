@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?> <!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.mybatis.sql.AddressMapper">
+
+	<select id="selectAddress" parameterType="int" resultType="Address">
+		SELECT * FROM address 
+		WHERE id = #{id}
+	</select>
+	
+	<select id="selectAddressesByPersonId" parameterType="int" resultType="Address"> 
+		SELECT * FROM address
+		WHERE personId = #{id}
+	</select> 
+	
+	<insert id="insertAddress" parameterType="Address"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO address (address, personId)
+		VALUES (#{address}, #{personId})
+	</insert>
+
+	<update id="updateAddress" parameterType="Address">
+		UPDATE address SET
+		address=#{address}
+		WHERE id=#{id}
+	</update>
+</mapper>
