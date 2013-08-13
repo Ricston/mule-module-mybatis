@@ -2,7 +2,7 @@ WELCOME
 =======
 This is the Mule module for MyBatis developed by Ricston Ltd (www.ricston.com).
 
-To compile and package from source, just execute: mvn package
+To compile and package from source, just execute: mvn package. This will also generate the Mule Studio plugin.
 
 All tests are use-cases which you can copy and paste from.
 
