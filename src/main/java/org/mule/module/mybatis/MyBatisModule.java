@@ -27,6 +27,8 @@ import org.mule.config.i18n.MessageFactory;
  * 
  * MyBatis module for Mule
  * 
+ * @author Alan Cassar
+ * 
  */
 @Module(name="mybatis", schemaVersion="1.0")
 public class MyBatisModule {
