@@ -186,6 +186,8 @@ public class MyBatisModule {
 	 * @param mapper Mapper class to use
 	 * @param method Method to invoke on the mapper
 	 * @param payload The payload
+	 * @param idField If set, the id will be populated using the value form idValue
+	 * @param idValue If set, the id will be populated using method set + idField + ()
 	 * @return Result of MyBatis call
 	 * @throws ClassNotFoundException Mapper not found
 	 * @throws IOException Io Error
@@ -196,9 +198,17 @@ public class MyBatisModule {
 	 * @throws IllegalArgumentException Error in arguments passed to method
 	 */
 	@Processor
-	public Object execute(String mapper, String method, @Payload Object payload) throws ClassNotFoundException, IOException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+	public Object execute(String mapper, String method, 
+	                      @Payload Object payload,
+	                      @Optional String idField,
+	                      @Optional Object idValue) throws ClassNotFoundException, IOException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
 		Class<?> mapperClass = muleContext.getExecutionClassLoader().loadClass(mapper);
+		
+		if (idField != null && idValue != null)
+		{
+		    setId(payload, idField, idValue);
+		}
 		
 		SqlSession sqlSession = createSqlSession();
 		Object mapperInstance = sqlSession.getMapper(mapperClass);
@@ -208,6 +218,20 @@ public class MyBatisModule {
 		closeSqlSession(sqlSession);
 		return result;
 		
+	}
+	
+	protected String formatSetterName(String idField)
+	{
+	    char firstCharacter = idField.charAt(0);
+	    firstCharacter = Character.toUpperCase(firstCharacter);
+	    
+	    return "set" + firstCharacter + idField.substring(1);
+	}
+	
+	protected void setId(Object payload, String idField, Object idValue) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
+	{
+	    Method setter = payload.getClass().getMethod(formatSetterName(idField), idValue.getClass());
+	    setter.invoke(payload, idValue);
 	}
 	
 	/**
