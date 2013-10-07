@@ -220,6 +220,12 @@ public class MyBatisModule {
 		
 	}
 	
+	/**
+	 * Converts the name of an field into a setter method name, example personId will be converted to setPersonId
+	 * 
+	 * @param idField the name of the id field to be set
+	 * @return set + upper case of first character of idField + the rest of idField
+	 */
 	protected String formatSetterName(String idField)
 	{
 	    char firstCharacter = idField.charAt(0);
@@ -228,6 +234,19 @@ public class MyBatisModule {
 	    return "set" + firstCharacter + idField.substring(1);
 	}
 	
+	/**
+	 * Sets the idField with the value passed in idValue. First we get the setter method using reflection.
+	 * 
+	 * 
+	 * @param payload the object on which the id field will be set
+	 * @param idField the name of the id field
+	 * @param idValue the value of the id field
+	 * @throws NoSuchMethodException
+	 * @throws SecurityException
+	 * @throws IllegalAccessException
+	 * @throws IllegalArgumentException
+	 * @throws InvocationTargetException
+	 */
 	protected void setId(Object payload, String idField, Object idValue) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
 	    Method setter = payload.getClass().getMethod(formatSetterName(idField), idValue.getClass());
