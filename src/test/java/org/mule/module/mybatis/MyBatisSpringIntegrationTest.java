@@ -16,7 +16,7 @@ public class MyBatisSpringIntegrationTest extends FunctionalTestCase{
 	
 	@Override
 	protected String getConfigResources() {
-		return "mybatis-spring-integration-test.xml";
+		return "mybatis-common-test.xml, mybatis-spring-integration-test.xml";
 	}
 	
 	@Test

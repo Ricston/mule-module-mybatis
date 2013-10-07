@@ -31,18 +31,13 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 			<springjdbc:script location="classpath:db-schema.ddl" />
 		</springjdbc:initialize-database>
 		
+		<spring:bean id="sqlTransactionFactory" class="org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory" />
+		
 		<spring:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<spring:property name="dataSource" ref="dataSource" />
 			<spring:property name="configLocation" value="classpath:mybatis-config.xml" />
+			<spring:property name="transactionFactory" ref="sqlTransactionFactory" />
 		</spring:bean>
 	</spring:beans>
 
-	<flow name="testInsert">
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
-	</flow>
-	
-	<flow name="testSelect">
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="selectPerson" />
-	</flow>
-	
 </mule>
