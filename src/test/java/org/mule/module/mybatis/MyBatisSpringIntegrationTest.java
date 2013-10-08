@@ -37,5 +37,24 @@ public class MyBatisSpringIntegrationTest extends FunctionalTestCase{
 		MyBatisTestUtils.runFlowWithPayloadAndExpect(muleContext, "testSelect", person, person.getId());
 	}
 	
+	@Test 
+	public void springTransactionComponent() throws Exception
+    {
+        Person person = MyBatisTestUtils.createTestPerson(false);
+        
+        try
+        {
+            MyBatisTestUtils.runFlowWithPayloadAndExpect(muleContext, "springTransactionComponentFlow",
+                person, person);
+        }
+        catch (Exception e)
+        {
+            MyBatisTestUtils.runFlowWithPayloadAndExpect(muleContext, "testSelect",
+                NullPayload.getInstance(), person.getId());
+        }
+        
+    }
+	
+	
 	
 }

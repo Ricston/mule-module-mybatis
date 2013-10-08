@@ -7,6 +7,8 @@ xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
 	xmlns:test="http://www.mulesoft.org/schema/mule/test" 
 	xmlns:mybatis="http://www.mulesoft.org/schema/mule/mybatis" 
 	xmlns:springjdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="
 http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
@@ -15,29 +17,49 @@ http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/cor
 http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd
 http://www.mulesoft.org/schema/mule/test http://www.mulesoft.org/schema/mule/test/current/mule-test.xsd
 http://www.mulesoft.org/schema/mule/mybatis http://www.mulesoft.org/schema/mule/mybatis/current/mule-mybatis.xsd
-http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd ">
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd ">
 
 	<mybatis:config name="mybatis" sqlSessionFactory-ref="sqlSessionFactory" />
 	
 	<spring:beans>
-		<spring:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-			<spring:property name="driverClassName" value="org.h2.Driver" /> 
+	
+		<tx:annotation-driven proxy-target-class="true"/>
+	
+		<context:component-scan base-package="org.mule.module.mybatis.component" />
+		
+		<spring:bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+			<spring:property name="driverClass" value="org.h2.Driver" /> 
 			<spring:property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
 			<spring:property name="username" value="root" />
 			<spring:property name="password" value="" />
+		</spring:bean>
+		
+		<spring:bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<spring:property name="dataSource" ref="dataSource" />
 		</spring:bean>
 		
 		<springjdbc:initialize-database data-source="dataSource" enabled="true" ignore-failures="DROPS" >
 			<springjdbc:script location="classpath:db-schema.ddl" />
 		</springjdbc:initialize-database>
 		
-		<spring:bean id="sqlTransactionFactory" class="org.apache.ibatis.transaction.jdbc.JdbcTransactionFactory" />
 		
 		<spring:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 			<spring:property name="dataSource" ref="dataSource" />
 			<spring:property name="configLocation" value="classpath:mybatis-config.xml" />
-			<spring:property name="transactionFactory" ref="sqlTransactionFactory" />
 		</spring:bean>
+		
+		<spring:bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<spring:property name="basePackage" value="org.mybatis.sql" />
+		</spring:bean>
+		
+		<spring:bean id="springTransactionComponent" class="org.mule.module.mybatis.component.SpringTransactionComponent" />
 	</spring:beans>
+	
+	<flow name="springTransactionComponentFlow">
+		<component>
+			<spring-object bean="springTransactionComponent"/>
+		</component>
+	</flow>
 
 </mule>
