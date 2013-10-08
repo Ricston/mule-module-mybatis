@@ -26,8 +26,6 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 	
 		<tx:annotation-driven proxy-target-class="true"/>
 	
-		<context:component-scan base-package="org.mule.module.mybatis.component" />
-		
 		<spring:bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 			<spring:property name="driverClass" value="org.h2.Driver" /> 
 			<spring:property name="url" value="jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1" />
