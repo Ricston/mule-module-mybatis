@@ -32,7 +32,7 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" idField="personId" idValue-ref="#[flowVars.person.id]"/>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]"/>
 		</foreach>
 		
 		<mybatis:commit-transaction />
@@ -45,7 +45,7 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" idField="personId" idValue-ref="#[flowVars.person.id]"/>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]"/>
 		</foreach>
 		
 		<test:component throwException="true"/>
@@ -62,7 +62,7 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" idField="personId" idValue-ref="#[flowVars.person.id]"/>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]"/>
 		</foreach>
 		
 		<mybatis:rollback-transaction />
@@ -75,7 +75,7 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" idField="personId" idValue-ref="#[flowVars.person.id]"/>
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]"/>
 		</foreach>
 		
 		<test:component throwException="true"/>

@@ -186,8 +186,8 @@ public class MyBatisModule {
 	 * @param mapper Mapper class to use
 	 * @param method Method to invoke on the mapper
 	 * @param payload The payload
-	 * @param idField If set, the id will be populated using the value form idValue
-	 * @param idValue If set, the id will be populated using method set + idField + ()
+	 * @param foreignKeyField If set, the id will be populated using the value form foreignKeyValue
+	 * @param foreignKeyValue If set, the id will be populated using method set + foreignKeyField + ()
 	 * @return Result of MyBatis call
 	 * @throws ClassNotFoundException Mapper not found
 	 * @throws IOException Io Error
@@ -200,14 +200,14 @@ public class MyBatisModule {
 	@Processor
 	public Object execute(String mapper, String method, 
 	                      @Payload Object payload,
-	                      @Optional String idField,
-	                      @Optional Object idValue) throws ClassNotFoundException, IOException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
+	                      @Optional String foreignKeyField,
+	                      @Optional Object foreignKeyValue) throws ClassNotFoundException, IOException, SecurityException, NoSuchMethodException, IllegalArgumentException, IllegalAccessException, InvocationTargetException
 	{
 		Class<?> mapperClass = muleContext.getExecutionClassLoader().loadClass(mapper);
 		
-		if (idField != null && idValue != null)
+		if (foreignKeyField != null && foreignKeyValue != null)
 		{
-		    setId(payload, idField, idValue);
+		    setForeignKey(payload, foreignKeyField, foreignKeyValue);
 		}
 		
 		SqlSession sqlSession = createSqlSession();
@@ -247,7 +247,7 @@ public class MyBatisModule {
 	 * @throws IllegalArgumentException
 	 * @throws InvocationTargetException
 	 */
-	protected void setId(Object payload, String idField, Object idValue) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
+	protected void setForeignKey(Object payload, String idField, Object idValue) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException
 	{
 	    Method setter = payload.getClass().getMethod(formatSetterName(idField), idValue.getClass());
 	    setter.invoke(payload, idValue);
