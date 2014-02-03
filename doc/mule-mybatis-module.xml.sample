@@ -1,5 +1,5 @@
 <!-- BEGIN_INCLUDE(mybatis:execute) -->
-    <mybatis:execute mapper="Person" method="selectPerson" idField="personId" idValue-ref="#[flowVars.person.id]"/>
+    <mybatis:execute mapper="Person" method="selectPerson" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]"/>
 <!-- END_INCLUDE(mybatis:execute) -->
 
 <!-- BEGIN_INCLUDE(mybatis:select-one) -->
