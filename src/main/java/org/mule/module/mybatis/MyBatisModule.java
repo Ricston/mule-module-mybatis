@@ -1,3 +1,8 @@
+/**
+ * (c) 2003-2014 Ricston, Ltd. The software in this package is published under the terms of the CPAL v1.0 license,
+ * a copy of which has been included with this distribution in the LICENSE.md file.
+ */
+
 package org.mule.module.mybatis;
 
 import java.io.IOException;
@@ -30,7 +35,7 @@ import org.mule.config.i18n.MessageFactory;
  * @author Alan Cassar
  * 
  */
-@Module(name="mybatis", schemaVersion="1.0")
+@Module(name="mybatis", friendlyName="MyBatis", schemaVersion="1.0")
 public class MyBatisModule {
 	
 	protected Log logger = LogFactory.getLog(getClass());

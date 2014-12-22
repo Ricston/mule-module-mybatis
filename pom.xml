@@ -7,12 +7,14 @@
 	<version>1.0-SNAPSHOT</version>
 	<packaging>mule-module</packaging>
 	<name>Mule Module MyBatis</name>
+	
+	<parent>
+        <groupId>org.mule.tools.devkit</groupId>
+        <artifactId>mule-devkit-parent</artifactId>
+        <version>3.5.1</version>
+    </parent>
 
 	<properties>
-<!-- 		<mule.version>3.3.2</mule.version> -->
-<!-- 		<mule.devkit.version>3.3.2</mule.devkit.version> -->
-		<mule.version>3.4.0</mule.version>
-		<mule.devkit.version>3.4.0</mule.devkit.version>
 		<spring.version>3.2.1.RELEASE</spring.version>
 		<junit.version>4.9</junit.version>
 		<mockito.version>1.8.2</mockito.version>
@@ -26,95 +28,6 @@
 	</properties>
 
 	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.mule.tools.devkit</groupId>
-					<artifactId>mule-devkit-maven-plugin</artifactId>
-					<version>${mule.devkit.version}</version>
-					<extensions>true</extensions>
-				</plugin>
-				<plugin>
-					<groupId>org.eclipse.m2e</groupId>
-					<artifactId>lifecycle-mapping</artifactId>
-					<version>1.0.0</version>
-					<configuration>
-						<lifecycleMappingMetadata>
-							<pluginExecutions>
-								<pluginExecution>
-									<pluginExecutionFilter>
-										<groupId>org.mule.tools.devkit</groupId>
-										<artifactId>mule-devkit-maven-plugin</artifactId>
-										<versionRange>[2.0,)</versionRange>
-										<goals>
-											<goal>attach-test-resources</goal>
-											<goal>filter-resources</goal>
-											<goal>generate-sources</goal>
-										</goals>
-									</pluginExecutionFilter>
-									<action>
-										<ignore />
-									</action>
-								</pluginExecution>
-							</pluginExecutions>
-						</lifecycleMappingMetadata>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>2.5</version>
-				<executions>
-					<execution>
-						<id>default-compile</id>
-						<configuration>
-							<compilerArgument>-proc:none</compilerArgument>
-							<source>${jdk.version}</source>
-							<target>${jdk.version}</target>
-						</configuration>
-					</execution>
-					<execution>
-						<id>default-testCompile</id>
-						<configuration>
-							<compilerArgument>-proc:none</compilerArgument>
-							<source>${jdk.version}</source>
-							<target>${jdk.version}</target>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<groupId>org.mule.tools.devkit</groupId>
-				<artifactId>mule-devkit-maven-plugin</artifactId>
-				<version>${mule.devkit.version}</version>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-enforcer-plugin</artifactId>
-				<version>1.0-alpha-4</version>
-				<executions>
-					<execution>
-						<id>enforce-maven-version</id>
-						<goals>
-							<goal>enforce</goal>
-						</goals>
-						<configuration>
-							<rules>
-								<requireMavenVersion>
-									<version>[3.0.0,)</version>
-								</requireMavenVersion>
-								<requireJavaVersion>
-									<version>[1.6.0,)</version>
-								</requireJavaVersion>
-							</rules>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
 		<resources>
 			<resource>
 				<filtering>false</filtering>
@@ -129,38 +42,12 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>org.mule</groupId>
-			<artifactId>mule-core</artifactId>
-			<version>${mule.version}</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-module-spring-config</artifactId>
-			<version>${mule.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.modules</groupId>
-			<artifactId>mule-module-scripting</artifactId>
-			<version>${mule.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.mule.tools.devkit</groupId>
-			<artifactId>mule-devkit-annotations</artifactId>
-			<version>${mule.devkit.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>eclipse-workbench</artifactId>
-			<version>3.6.1.M20100826-1330</version>
-			<scope>provided</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.eclipse</groupId>
-			<artifactId>eclipse-runtime</artifactId>
-			<version>3.6.0.v20100505</version>
-			<scope>provided</scope>
-		</dependency>
+            <groupId>eclipse</groupId>
+            <artifactId>eclipse-runtime</artifactId>
+            <version>2.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        
 		<dependency>
 			<groupId>org.osgi</groupId>
 			<artifactId>core</artifactId>
@@ -182,12 +69,6 @@
 
 		<!-- Testing -->
 		<dependency>
-			<groupId>org.mule.tests</groupId>
-			<artifactId>mule-tests-functional</artifactId>
-			<version>${mule.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
 			<groupId>org.mule.transports</groupId>
 			<artifactId>mule-transport-vm</artifactId>
 			<version>${mule.version}</version>
@@ -197,18 +78,6 @@
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
 			<version>${h2.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>${junit.version}</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>org.mockito</groupId>
-			<artifactId>mockito-all</artifactId>
-			<version>${mockito.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
