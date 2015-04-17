@@ -20,7 +20,7 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.mule.api.MuleContext;
 import org.mule.api.annotations.Configurable;
-import org.mule.api.annotations.Module;
+import org.mule.api.annotations.Connector;
 import org.mule.api.annotations.Processor;
 import org.mule.api.annotations.lifecycle.Start;
 import org.mule.api.annotations.param.Optional;
@@ -35,8 +35,8 @@ import org.mule.config.i18n.MessageFactory;
  * @author Alan Cassar
  * 
  */
-@Module(name="mybatis", friendlyName="MyBatis", schemaVersion="1.0")
-public class MyBatisModule {
+@Connector(name="mybatis", friendlyName="MyBatis", schemaVersion="1.0")
+public class MyBatisConnector {
 	
 	protected Log logger = LogFactory.getLog(getClass());
 	

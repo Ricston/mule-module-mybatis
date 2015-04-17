@@ -3,7 +3,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mule.modules</groupId>
-	<artifactId>mule-module-mybatis</artifactId>
+	<artifactId>mule-mybatis-connector</artifactId>
 	<version>1.0.0</version>
 	<packaging>mule-module</packaging>
 	<name>Mule Module MyBatis</name>
@@ -38,6 +38,22 @@
 				<directory>src/test/resources</directory>
 			</resource>
 		</resources>
+		
+		<plugins>
+			<plugin>
+				<groupId>org.mule.certification</groupId>
+				<artifactId>project-structure-validation</artifactId>
+				<version>1.0.4</version>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>validate</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
 	</build>
 
 	<dependencies>

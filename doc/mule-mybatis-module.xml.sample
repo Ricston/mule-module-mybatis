@@ -1,45 +1,39 @@
 <!-- BEGIN_INCLUDE(mybatis:execute) -->
-    <mybatis:execute mapper="Person" method="selectPerson" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]"/>
+    <mybatis:execute mapper="Person" method="selectPerson" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:execute) -->
 
 <!-- BEGIN_INCLUDE(mybatis:select-one) -->
-    <mybatis:select-one statement="org.mybastis.sql.PersonMapper.selectOne"/>
+    <mybatis:select-one statement="org.mybastis.sql.PersonMapper.selectOne" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:select-one) -->
 
 <!-- BEGIN_INCLUDE(mybatis:select-list) -->
-    <mybatis:select-list statement="org.mybastis.sql.PersonMapper.selectList"/>
+    <mybatis:select-list statement="org.mybastis.sql.PersonMapper.selectList" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:select-list) -->
 
 <!-- BEGIN_INCLUDE(mybatis:select-map) -->
-    <mybatis:select-map statement="org.mybastis.sql.PersonMapper.selectMap" mapKey="id"/>
+    <mybatis:select-map statement="org.mybastis.sql.PersonMapper.selectMap" mapKey="id" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:select-map) -->
 
 <!-- BEGIN_INCLUDE(mybatis:update) -->
-    <mybatis:update statement="org.mybastis.sql.PersonMapper.update"/>
+    <mybatis:update statement="org.mybastis.sql.PersonMapper.update" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:update) -->
 
 <!-- BEGIN_INCLUDE(mybatis:insert) -->
-    <mybatis:insert statement="org.mybastis.sql.PersonMapper.selectOne"/>
+    <mybatis:insert statement="org.mybastis.sql.PersonMapper.selectOne" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:insert) -->
 
 <!-- BEGIN_INCLUDE(mybatis:delete) -->
-    <mybatis:delete statement="org.mybastis.sql.PersonMapper.selectOne"/>
+    <mybatis:delete statement="org.mybastis.sql.PersonMapper.selectOne" config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:delete) -->
 
 <!-- BEGIN_INCLUDE(mybatis:begin-transaction) -->
-    <mybatis:begin-transaction />
+    <mybatis:begin-transaction config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:begin-transaction) -->
 
 <!-- BEGIN_INCLUDE(mybatis:commit-transaction) -->
-    <mybatis:commit-transaction />
+    <mybatis:commit-transaction config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:commit-transaction) -->
 
 <!-- BEGIN_INCLUDE(mybatis:rollback-transaction) -->
-    <mybatis:rollback-transaction />
+    <mybatis:rollback-transaction config-ref="mybatis"/>
 <!-- END_INCLUDE(mybatis:rollback-transaction) -->
-
-
-
-
-
-
