@@ -19,4 +19,4 @@ Please read the following blog post: http://ricston.com/blog/rant-mule-jdbc-tran
 License
 ========
 
-Apache License 2.0 (Please see LICENSE.md)
+See LICENSE.md
