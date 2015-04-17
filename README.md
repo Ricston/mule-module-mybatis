@@ -9,7 +9,7 @@ All tests are use-cases which you can copy and paste from.
 Minimum Requirements
 ====================
 
-Mule 3.3.x or higher
+Mule 3.6.x or higher
 Maven 3.0.3 or higher
 
 Documentation

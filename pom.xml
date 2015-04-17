@@ -4,23 +4,23 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.mule.modules</groupId>
 	<artifactId>mule-module-mybatis</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<packaging>mule-module</packaging>
 	<name>Mule Module MyBatis</name>
 	
 	<parent>
         <groupId>org.mule.tools.devkit</groupId>
         <artifactId>mule-devkit-parent</artifactId>
-        <version>3.5.1</version>
+        <version>3.6.1</version>
     </parent>
 
 	<properties>
-		<spring.version>3.2.1.RELEASE</spring.version>
+		<spring.version>3.2.10.RELEASE</spring.version>
 		<junit.version>4.9</junit.version>
 		<mockito.version>1.8.2</mockito.version>
 		<jdk.version>1.6</jdk.version>
-		<mybatis.version>3.2.2</mybatis.version>
-		<mybatis.spring.version>1.2.0</mybatis.spring.version>
+		<mybatis.version>3.2.8</mybatis.version>
+		<mybatis.spring.version>1.2.2</mybatis.spring.version>
 		<h2.version>1.3.171</h2.version>
 		<category>Community</category>
 		<licensePath>LICENSE.md</licensePath>
