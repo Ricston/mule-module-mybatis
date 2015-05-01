@@ -1,0 +1,28 @@
+== MyBatis Connector Release Notes
+
+=== 24-04-2015
+
+=== Contents
+
+. Compatibility
+. Features
+. Fixed in this Release
+. Known Issues
+. Support Resources
+
+Release Notes for version 1.0.0 of the MyBatis connector. These Release Notes accompany the http://www.mulesoft.org/documentation/display/current/MyBatis+Connector[Connector guide].
+ 
+=== Compatibility
+The MyBatis connector is compatible with:
+
+|===
+|Application/Service|Version
+
+|Mule Runtime 	|3.6
+|===
+
+=== Support Resources
+
+. Learn how to Install and Configure Anypoint™ Connectors in Anypoint™ Studio http://www.mulesoft.org/documentation/display/current/Installing+Connectors[here].
+. Access MuleSoft’s http://forum.mulesoft.org/mulesoft[MuleForge forum] to pose questions and get help from Mule’s broad community of users.
+. To access MuleSoft’s expert support team, https://www.mulesoft.com/platform/soa/mule-esb-open-source-esb[subscribe] to Mule ESB Enterprise and log in to MuleSoft’s https://www.mulesoft.com/support-login[Customer Portal].
