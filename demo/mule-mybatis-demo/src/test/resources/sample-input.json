@@ -1,0 +1,8 @@
+{
+  "name" : "Joe",
+  "surname" : "Bloggs",
+  "age" : 30,
+	"addresses" : [{
+		"address" : "Some address"
+	}]
+}

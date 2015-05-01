@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" 
+xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans"
+	xmlns:mybatis="http://www.mulesoft.org/schema/mule/mybatis" 
+	xmlns:springjdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mybatis http://www.mulesoft.org/schema/mule/mybatis/current/mule-mybatis.xsd
+http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd" version="CE-3.5.0">
+
+	<mybatis:config name="mybatis" configFile="mybatis-demo-config.xml" doc:name="MyBatis"/>
+	
+	<spring:beans>
+		<spring:bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+			<spring:property name="driverClassName" value="org.apache.derby.jdbc.EmbeddedDriver" /> 
+			<spring:property name="url" value="jdbc:derby:memory:demodb;create=true" />
+		</spring:bean>
+		
+		<springjdbc:initialize-database data-source="dataSource" enabled="true" ignore-failures="DROPS" >
+			<springjdbc:script location="classpath:db-demo-schema.ddl" />
+		</springjdbc:initialize-database>
+	</spring:beans>
+	
+	<flow name="insertPersonFlow" doc:name="insertPersonFlow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="insert" doc:name="HTTP"/>
+        <json:json-to-object-transformer returnClass="org.mybatis.domain.Person" doc:name="JSON to Object"/>
+		<mybatis:begin-transaction config-ref="mybatis" doc:name="MyBatis Begin Transaction"/>
+		
+		<set-variable variableName="person" value="#[payload]" doc:name="person"/>
+		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" doc:name="MyBatis Insert Person"/>
+		<foreach collection="#[flowVars.person.addresses]" doc:name="For Each">
+			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis" doc:name="MyBatis Insert Address"/>
+		</foreach>
+		<mybatis:commit-transaction config-ref="mybatis" doc:name="MyBatis Commit"/>
+        <set-payload value="#[flowVars.person]" doc:name="Person"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+	</flow>
+
+</mule>
