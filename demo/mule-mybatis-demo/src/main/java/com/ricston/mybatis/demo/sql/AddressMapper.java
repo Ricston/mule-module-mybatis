@@ -3,11 +3,11 @@
  * a copy of which has been included with this distribution in the LICENSE.md file.
  */
 
-package org.mybatis.sql;
+package com.ricston.mybatis.demo.sql;
 
 import java.util.List;
 
-import org.mybatis.domain.Address;
+import com.ricston.mybatis.demo.domain.Address;
 
 public interface AddressMapper {
 

@@ -29,16 +29,23 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	
 	<flow name="insertPersonFlow" doc:name="insertPersonFlow">
         <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="insert" doc:name="HTTP"/>
-        <json:json-to-object-transformer returnClass="org.mybatis.domain.Person" doc:name="JSON to Object"/>
+        <json:json-to-object-transformer returnClass="com.ricston.mybatis.demo.domain.Person" doc:name="JSON to Object"/>
 		<mybatis:begin-transaction config-ref="mybatis" doc:name="MyBatis Begin Transaction"/>
 		
 		<set-variable variableName="person" value="#[payload]" doc:name="person"/>
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" doc:name="MyBatis Insert Person"/>
+		<mybatis:execute mapper="com.ricston.mybatis.demo.sql.PersonMapper" method="insertPerson" config-ref="mybatis" doc:name="MyBatis Insert Person"/>
 		<foreach collection="#[flowVars.person.addresses]" doc:name="For Each">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis" doc:name="MyBatis Insert Address"/>
+			<mybatis:execute mapper="com.ricston.mybatis.demo.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis" doc:name="MyBatis Insert Address"/>
 		</foreach>
 		<mybatis:commit-transaction config-ref="mybatis" doc:name="MyBatis Commit"/>
         <set-payload value="#[flowVars.person]" doc:name="Person"/>
+        <json:object-to-json-transformer doc:name="Object to JSON"/>
+	</flow>
+	
+	<flow name="selectAllPersonsFlow" doc:name="insertPersonFlow">
+        <http:inbound-endpoint exchange-pattern="request-response" host="localhost" port="8081" path="select" doc:name="HTTP"/>
+        <set-payload value="#[import org.mule.transport.NullPayload; NullPayload.instance]"/>
+		<mybatis:execute mapper="com.ricston.mybatis.demo.sql.PersonMapper" method="selectAllPersons" config-ref="mybatis" doc:name="MyBatis Select All Persons"/>
         <json:object-to-json-transformer doc:name="Object to JSON"/>
 	</flow>
 
