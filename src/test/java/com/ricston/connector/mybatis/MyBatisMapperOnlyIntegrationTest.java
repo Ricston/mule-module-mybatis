@@ -3,7 +3,7 @@
  * a copy of which has been included with this distribution in the LICENSE.md file.
  */
 
-package org.mule.module.mybatis;
+package com.ricston.connector.mybatis;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +12,8 @@ import org.junit.Test;
 import org.mule.api.MuleMessage;
 import org.mule.tck.junit4.FunctionalTestCase;
 import org.mule.transport.NullPayload;
-import org.mybatis.domain.Person;
+
+import com.ricston.connector.mybatis.domain.Person;
 
 
 public class MyBatisMapperOnlyIntegrationTest extends FunctionalTestCase{

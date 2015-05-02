@@ -3,14 +3,15 @@
  * a copy of which has been included with this distribution in the LICENSE.md file.
  */
 
-package org.mule.module.mybatis.component;
+package com.ricston.connector.mybatis.component;
 
-import org.mybatis.domain.Address;
-import org.mybatis.domain.Person;
-import org.mybatis.sql.AddressMapper;
-import org.mybatis.sql.PersonMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.ricston.connector.mybatis.domain.Address;
+import com.ricston.connector.mybatis.domain.Person;
+import com.ricston.connector.mybatis.sql.AddressMapper;
+import com.ricston.connector.mybatis.sql.PersonMapper;
 
 public class SpringTransactionComponent
 {

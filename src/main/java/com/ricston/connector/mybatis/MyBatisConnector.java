@@ -3,7 +3,7 @@
  * a copy of which has been included with this distribution in the LICENSE.md file.
  */
 
-package org.mule.module.mybatis;
+package com.ricston.connector.mybatis;
 
 import java.io.IOException;
 import java.io.Reader;

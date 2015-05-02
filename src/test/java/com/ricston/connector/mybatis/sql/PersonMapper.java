@@ -3,9 +3,9 @@
  * a copy of which has been included with this distribution in the LICENSE.md file.
  */
 
-package org.mybatis.sql;
+package com.ricston.connector.mybatis.sql;
 
-import org.mybatis.domain.Person;
+import com.ricston.connector.mybatis.domain.Person;
 
 public interface PersonMapper {
 

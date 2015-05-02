@@ -3,20 +3,16 @@
  * a copy of which has been included with this distribution in the LICENSE.md file.
  */
 
-package org.mybatis.domain;
-
-import java.util.List;
+package com.ricston.connector.mybatis.domain;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 
-public class Person {
+public class Address {
 
 	private Integer id;
-	private String name;
-	private String surname;
-	private Integer age;
-	private List<Address> addresses;
+	private String address;
+	private Integer personId;
 
 	public Integer getId() {
 		return id;
@@ -26,38 +22,22 @@ public class Person {
 		this.id = id;
 	}
 
-	public String getName() {
-		return name;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getSurname() {
-		return surname;
+	public Integer getPersonId() {
+		return personId;
 	}
 
-	public void setSurname(String surname) {
-		this.surname = surname;
+	public void setPersonId(Integer personId) {
+		this.personId = personId;
 	}
-
-	public Integer getAge() {
-		return age;
-	}
-
-	public void setAge(Integer age) {
-		this.age = age;
-	}
-
-	public List<Address> getAddresses() {
-		return addresses;
-	}
-
-	public void setAddresses(List<Address> addresses) {
-		this.addresses = addresses;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		return EqualsBuilder.reflectionEquals(this, obj);
@@ -67,7 +47,5 @@ public class Person {
 	public int hashCode() {
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
-	
-	
 
 }

@@ -18,21 +18,21 @@ http://www.mulesoft.org/schema/mule/mybatis http://www.mulesoft.org/schema/mule/
 http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd ">
 
 	<flow name="testInsert">
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis"/>
+		<mybatis:execute mapper="com.ricston.connector.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis"/>
 	</flow>
 	
 	<flow name="testSelect">
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="selectPerson" config-ref="mybatis" />
+		<mybatis:execute mapper="com.ricston.connector.mybatis.sql.PersonMapper" method="selectPerson" config-ref="mybatis" />
 	</flow>
 	
 	<flow name="testTransactionSuccess">
 		<mybatis:begin-transaction config-ref="mybatis" />
 		
 		<set-variable variableName="person" value="#[payload]" />
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
+		<mybatis:execute mapper="com.ricston.connector.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
+			<mybatis:execute mapper="com.ricston.connector.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
 		</foreach>
 		
 		<mybatis:commit-transaction config-ref="mybatis"/>
@@ -42,10 +42,10 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:begin-transaction config-ref="mybatis" />
 		
 		<set-variable variableName="person" value="#[payload]" />
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
+		<mybatis:execute mapper="com.ricston.connector.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
+			<mybatis:execute mapper="com.ricston.connector.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
 		</foreach>
 		
 		<test:component throwException="true"/>
@@ -59,10 +59,10 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:begin-transaction config-ref="mybatis" />
 		
 		<set-variable variableName="person" value="#[payload]" />
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
+		<mybatis:execute mapper="com.ricston.connector.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
+			<mybatis:execute mapper="com.ricston.connector.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
 		</foreach>
 		
 		<mybatis:rollback-transaction config-ref="mybatis" />
@@ -72,10 +72,10 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
 		<mybatis:begin-transaction config-ref="mybatis" />
 		
 		<set-variable variableName="person" value="#[payload]" />
-		<mybatis:execute mapper="org.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
+		<mybatis:execute mapper="com.ricston.connector.mybatis.sql.PersonMapper" method="insertPerson" config-ref="mybatis" />
 		
 		<foreach collection="#[flowVars.person.addresses]">
-			<mybatis:execute mapper="org.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
+			<mybatis:execute mapper="com.ricston.connector.mybatis.sql.AddressMapper" method="insertAddress" foreignKeyField="personId" foreignKeyValue-ref="#[flowVars.person.id]" config-ref="mybatis"/>
 		</foreach>
 		
 		<test:component throwException="true"/>

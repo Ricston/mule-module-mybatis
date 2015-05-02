@@ -6,8 +6,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		<setting name="useGeneratedKeys" value="true" />
 	</settings>
 	<typeAliases>
-		<typeAlias alias="Person" type="org.mybatis.domain.Person" />
-		<typeAlias alias="Address" type="org.mybatis.domain.Address" />
+		<typeAlias alias="Person" type="com.ricston.connector.mybatis.domain.Person" />
+		<typeAlias alias="Address" type="com.ricston.connector.mybatis.domain.Address" />
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">
@@ -21,8 +21,8 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
 		</environment>
 	</environments>
 	<mappers>
-		<mapper resource="org/mybatis/sql/person-mapper.xml" />
-		<mapper resource="org/mybatis/sql/person-mapper-only.xml" />
-		<mapper resource="org/mybatis/sql/address-mapper.xml" />
+		<mapper resource="com/ricston/connector/mybatis/sql/person-mapper.xml" />
+		<mapper resource="com/ricston/connector/mybatis/sql/person-mapper-only.xml" />
+		<mapper resource="com/ricston/connector/mybatis/sql/address-mapper.xml" />
 	</mappers>
 </configuration>

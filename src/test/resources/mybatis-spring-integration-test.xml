@@ -48,10 +48,10 @@ http://www.springframework.org/schema/tx http://www.springframework.org/schema/t
 		</spring:bean>
 		
 		<spring:bean id="mapperScanner" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-			<spring:property name="basePackage" value="org.mybatis.sql" />
+			<spring:property name="basePackage" value="com.ricston.connector.mybatis.sql" />
 		</spring:bean>
 		
-		<spring:bean id="springTransactionComponent" class="org.mule.module.mybatis.component.SpringTransactionComponent" />
+		<spring:bean id="springTransactionComponent" class="com.ricston.connector.mybatis.component.SpringTransactionComponent" />
 	</spring:beans>
 	
 	<flow name="springTransactionComponentFlow">
