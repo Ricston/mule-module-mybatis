@@ -27,6 +27,7 @@ import org.mule.api.annotations.param.Optional;
 import org.mule.api.annotations.param.Payload;
 import org.mule.api.lifecycle.LifecycleException;
 import org.mule.config.i18n.MessageFactory;
+import org.mule.transport.NullPayload;
 
 /**
  * 
@@ -218,8 +219,18 @@ public class MyBatisConnector {
 		SqlSession sqlSession = createSqlSession();
 		Object mapperInstance = sqlSession.getMapper(mapperClass);
 		
-		Method methodInstsance = mapperClass.getMethod(method, payload.getClass());
-		Object result = methodInstsance.invoke(mapperInstance, payload);
+		Object result;
+		
+		//if payload is empty, then we want to invoke a method with no params
+		if (payload == null || payload instanceof NullPayload){
+			Method methodInstsance = mapperClass.getMethod(method);
+			result = methodInstsance.invoke(mapperInstance);
+		}
+		else{
+			Method methodInstsance = mapperClass.getMethod(method, payload.getClass());
+			result = methodInstsance.invoke(mapperInstance, payload);
+		}
+		
 		closeSqlSession(sqlSession);
 		return result;
 		
