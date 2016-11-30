@@ -21,7 +21,7 @@
 		<jdk.version>1.6</jdk.version>
 		<mybatis.version>3.4.1</mybatis.version>
 		<mybatis.spring.version>1.3.0</mybatis.spring.version>
-		<h2.version>1.3.171</h2.version>
+		<h2.version>1.4.193</h2.version>
 		<category>Community</category>
 		<licensePath>LICENSE.md</licensePath>
 		<devkit.studio.package.skip>false</devkit.studio.package.skip>
