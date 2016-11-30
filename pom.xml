@@ -17,7 +17,7 @@
 	<properties>
 		<spring.version>4.1.9.RELEASE</spring.version>
 		<junit.version>4.9</junit.version>
-		<mockito.version>1.8.2</mockito.version>
+		<mockito.version>1.9.5</mockito.version>
 		<jdk.version>1.6</jdk.version>
 		<mybatis.version>3.2.8</mybatis.version>
 		<mybatis.spring.version>1.2.2</mybatis.spring.version>
