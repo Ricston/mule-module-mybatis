@@ -12,6 +12,7 @@
         <groupId>org.mule.tools.devkit</groupId>
         <artifactId>mule-devkit-parent</artifactId>
         <version>3.8.2</version>
+        <relativePath />
     </parent>
 
 	<properties>
