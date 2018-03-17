@@ -7,3 +7,4 @@ bin
 target
 .studio
 *.log
+.mvn/wrapper/maven-wrapper.jar
